@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 'added_by' => $_SESSION['id'],
                 'title' => $_POST['title'],
                 'description' => $_POST['description'],
-                'flag' => $_POST['flag'],
+                'flag' => password_hash($_POST['flag'], PASSWORD_DEFAULT),
                 'automark' => $_POST['automark'],
                 'case_insensitive' => $_POST['case_insensitive'],
                 'points' => empty_to_zero($_POST['points']),

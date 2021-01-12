@@ -105,13 +105,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // at beginning or end, so trimming is probably fine.
             $_POST['flag'] = trim($_POST['flag']);
             $challenge['flag'] = trim($challenge['flag']);
-
+            
+            // case sensitivity is mandatory in hash scenario
             if ($challenge['case_insensitive']) {
-                if (strcasecmp($_POST['flag'], $challenge['flag']) == 0) {
+                if (password_verify($_POST['flag'], $challenge['flag'])) {
                     $correct = true;
                 }
             } else {
-                if (strcmp($_POST['flag'], $challenge['flag']) == 0) {
+                if (password_verify($_POST['flag'], $challenge['flag'])) {
                     $correct = true;
                 }
             }
@@ -123,7 +124,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 'added'=>$time,
                 'challenge'=>$_POST['challenge'],
                 'user_id'=>$_SESSION['id'],
-                'flag'=>$_POST['flag'],
+                'flag'=>password_hash($_POST['flag'], PASSWORD_DEFAULT),
                 'correct'=>($correct ? '1' : '0'),
                 'marked'=>($challenge['automark'] ? '1' : '0')
             )

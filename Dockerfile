@@ -1,7 +1,5 @@
 FROM php:7-apache
 
-MAINTAINER Nakiami <contact@greyboxconcepts.com.au>
-
 RUN apt-get update && apt-get install -y \
     git \
     libssl-dev \
